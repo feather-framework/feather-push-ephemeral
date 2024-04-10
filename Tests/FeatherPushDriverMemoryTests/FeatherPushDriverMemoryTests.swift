@@ -19,7 +19,6 @@ final class FeatherPushDriverMemoryTests: XCTestCase {
             let registry = ComponentRegistry()
             try await registry.addPush(MemoryPushComponentContext())
 
-            try await registry.run()
             let push = try await registry.push()
 
             do {
