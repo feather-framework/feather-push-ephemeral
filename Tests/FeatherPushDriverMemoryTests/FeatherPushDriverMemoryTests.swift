@@ -18,10 +18,10 @@ final class FeatherPushDriverMemoryTests: XCTestCase {
         do {
             let registry = ComponentRegistry()
             try await registry.addPush(MemoryPushComponentContext())
-            
+
             try await registry.run()
             let push = try await registry.push()
-            
+
             do {
                 try await push.send(
                     notification: .init(
@@ -35,20 +35,13 @@ final class FeatherPushDriverMemoryTests: XCTestCase {
                         )
                     ]
                 )
-                
+
                 let memoryPush = push as! MemoryPushComponent
                 let notifications = await memoryPush.getNotifications()
-                print(notifications)
                 XCTAssertFalse(notifications.isEmpty)
-                
-                // TODO: enable test suite
-//                let suite = PushTestSuite(push)
-//                try await suite.testAll()
-                
-                try await registry.shutdown()
+
             }
             catch {
-                try await registry.shutdown()
                 throw error
             }
         }

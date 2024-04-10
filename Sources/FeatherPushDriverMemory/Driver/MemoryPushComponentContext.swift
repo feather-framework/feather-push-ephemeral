@@ -7,12 +7,15 @@
 
 import FeatherComponent
 
+/// memory push component context
 public struct MemoryPushComponentContext: ComponentContext {
-    
+
+    /// memory push component context init
     public init() {}
 
-    public func make() throws -> ComponentBuilder {
-        MemoryPushComponentBuilder()
+    /// make
+    public func make() throws -> ComponentFactory {
+        MemoryPushComponentFactory()
     }
 
 }

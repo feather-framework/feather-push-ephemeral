@@ -13,7 +13,7 @@ let package = Package(
         .library(name: "FeatherPushDriverMemory", targets: ["FeatherPushDriverMemory"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/feather-framework/feather-push", .upToNextMinor(from: "0.3.0")),
+        .package(url: "https://github.com/feather-framework/feather-push", .upToNextMinor(from: "0.4.0")),
     ],
     targets: [
         .target(
