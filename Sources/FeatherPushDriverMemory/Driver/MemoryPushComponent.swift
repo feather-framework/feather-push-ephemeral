@@ -8,10 +8,12 @@
 import FeatherComponent
 import FeatherPush
 
+/// memory push  component
 @dynamicMemberLookup
 public struct MemoryPushComponent {
 
     let memoryPush: MemoryPush
+    /// component config
     public let config: ComponentConfig
 
     subscript<T>(
@@ -28,7 +30,8 @@ public struct MemoryPushComponent {
 }
 
 public extension MemoryPushComponent {
-    
+
+    /// get notifications
     func getNotifications() async -> [(Notification, [Recipient])] {
         await memoryPush.getNotifications()
     }
@@ -36,6 +39,7 @@ public extension MemoryPushComponent {
 
 extension MemoryPushComponent: PushComponent {
 
+    /// send a new push message
     public func send(
         notification: Notification,
         to recipients: [Recipient]

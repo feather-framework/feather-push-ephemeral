@@ -7,7 +7,7 @@
 
 import FeatherComponent
 
-struct MemoryPushComponentBuilder: ComponentBuilder {
+struct MemoryPushComponentFactory: ComponentFactory {
 
     func build(using config: ComponentConfig) throws -> Component {
         MemoryPushComponent(config: config)
