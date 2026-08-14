@@ -1,45 +1,67 @@
-# Feather Push Driver Memory
+# Feather Push Ephemeral
 
-A push driver for the Feather CMS Push component using an in-memory notification storage.
+An in-memory push client for Feather Push, intended for tests and local development.
 
-## Getting started
+[![Release: 1.0.0-beta.1](https://img.shields.io/badge/Release-1%2E0%2E0--beta%2E1-F05138)](https://github.com/feather-framework/feather-push-ephemeral/releases/tag/1.0.0-beta.1)
 
-⚠️ This repository is a work in progress, things can break until it reaches v1.0.0. 
+## Features
 
-Use at your own risk.
+- In-memory `PushClient` implementation
+- Topic-based notification capture
+- Useful for tests and local development
+- Swift 6 concurrency support
 
-### Adding the dependency
+## Requirements
 
-To add a dependency on the package, declare it in your `Package.swift`:
+![Swift 6.1+](https://img.shields.io/badge/Swift-6%2E1%2B-F05138)
+![Platforms: Linux, macOS, iOS, tvOS, watchOS, visionOS](https://img.shields.io/badge/Platforms-Linux_%7C_macOS_%7C_iOS_%7C_tvOS_%7C_watchOS_%7C_visionOS-F05138)
+
+- Swift 6.1+
+- Platforms:
+  - Linux
+  - macOS 15+
+  - iOS 18+
+  - tvOS 18+
+  - watchOS 11+
+  - visionOS 2+
+
+## Installation
+
+Use Swift Package Manager; add the dependency to your `Package.swift` file:
 
 ```swift
-.package(url: "https://github.com/feather-framework/feather-push-driver-memory", .upToNextMinor(from: "0.4.0")),
+.package(url: "https://github.com/feather-framework/feather-push-ephemeral", exact: "1.0.0-beta.1"),
 ```
 
-and to your application target, add `FeatherPushDriverMemory` to your dependencies:
+Then add `FeatherPushEphemeral` to your target dependencies:
 
 ```swift
-.product(name: "FeatherPushDriverMemory", package: "feather-push-driver-memory")
+.product(name: "FeatherPushEphemeral", package: "feather-push-ephemeral"),
 ```
 
-Example `Package.swift` file with `FeatherPushDriverMemory` as a dependency:
+## Usage
 
 ```swift
-// swift-tools-version:5.9
-import PackageDescription
-
-let package = Package(
-    name: "my-application",
-    dependencies: [
-        .package(url: "https://github.com/feather-framework/feather-Push-driver-memory", .upToNextMinor(from: "0.4.0")),
-    ],
-    targets: [
-        .target(name: "MyApplication", dependencies: [
-            .product(name: "FeatherPushDriverMemory", package: "feather-Push-driver-memory")
-        ]),
-        .testTarget(name: "MyApplicationTests", dependencies: [
-            .target(name: "MyApplication"),
-        ]),
-    ]
+let client = PushClientEphemeral()
+let notification = PushNotification(
+    title: "New message",
+    body: "You have a new message."
 )
+
+try await client.send(notification: notification, to: "messages")
+let captured = await client.getNotifications()
 ```
+
+> [!WARNING]
+> This repository is a work in progress, things can break until it reaches v1.0.0.
+
+## Development
+
+- Build: `swift build`
+- Test: `make test`
+- Format: `make format`
+- Check: `make check`
+
+## Contributing
+
+[Pull requests](https://github.com/feather-framework/feather-push-ephemeral/pulls) are welcome. Please keep changes focused and include tests for new logic.
