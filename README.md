@@ -2,12 +2,12 @@
 
 An in-memory push client for Feather Push, intended for tests and local development.
 
-[![Release: 1.0.0-beta.1](https://img.shields.io/badge/Release-1%2E0%2E0--beta%2E1-F05138)](https://github.com/feather-framework/feather-push-ephemeral/releases/tag/1.0.0-beta.1)
+[![Release: 1.0.0-beta.2](https://img.shields.io/badge/Release-1%2E0%2E0--beta%2E2-F05138)](https://github.com/feather-framework/feather-push-ephemeral/releases/tag/1.0.0-beta.2)
 
 ## Features
 
 - In-memory `PushClient` implementation
-- Topic-based notification capture
+- Topic and device-token notification capture
 - Useful for tests and local development
 - Swift 6 concurrency support
 
@@ -30,7 +30,7 @@ An in-memory push client for Feather Push, intended for tests and local developm
 Use Swift Package Manager; add the dependency to your `Package.swift` file:
 
 ```swift
-.package(url: "https://github.com/feather-framework/feather-push-ephemeral", exact: "1.0.0-beta.1"),
+.package(url: "https://github.com/feather-framework/feather-push-ephemeral", exact: "1.0.0-beta.2"),
 ```
 
 Then add `FeatherPushEphemeral` to your target dependencies:
@@ -48,9 +48,16 @@ let notification = PushNotification(
     body: "You have a new message."
 )
 
-try await client.send(notification: notification, to: "messages")
+try await client.send(notification: notification, to: .topic("messages"))
+try await client.send(
+    notification: notification,
+    to: .deviceToken("device-registration-token")
+)
 let captured = await client.getNotifications()
 ```
+
+`getNotifications()` returns each notification together with the destination
+string that was supplied as either `.topic(...)` or `.deviceToken(...)`.
 
 > [!WARNING]
 > This repository is a work in progress, things can break until it reaches v1.0.0.
