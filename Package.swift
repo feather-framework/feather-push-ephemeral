@@ -32,7 +32,7 @@ let package = Package(
         .library(name: "FeatherPushEphemeral", targets: ["FeatherPushEphemeral"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/feather-framework/feather-push", exact: "1.0.0-beta.1"),
+        .package(url: "https://github.com/feather-framework/feather-push", exact: "1.0.0-beta.2"),
         // [docc-plugin-placeholder]
     ],
     targets: [

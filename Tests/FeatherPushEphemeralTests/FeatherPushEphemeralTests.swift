@@ -16,7 +16,7 @@ struct FeatherPushEphemeralTests {
         let client = PushClientEphemeral()
         let notification = PushNotification(title: "title", body: "body")
 
-        try await client.send(notification: notification, to: "news")
+        try await client.send(notification: notification, to: .topic("news"))
 
         let notifications = await client.getNotifications()
         #expect(notifications.count == 1)
@@ -31,7 +31,7 @@ struct FeatherPushEphemeralTests {
         do {
             try await client.send(
                 notification: PushNotification(title: "title", body: "body"),
-                to: ""
+                to: .topic("")
             )
             Issue.record("Expected PushClientError.invalidTopic to be thrown.")
         }
@@ -44,11 +44,45 @@ struct FeatherPushEphemeralTests {
     }
 
     @Test
+    func clientSendStoresDeviceToken() async throws {
+        let client = PushClientEphemeral()
+
+        try await client.send(
+            notification: PushNotification(title: "title", body: "body"),
+            to: .deviceToken("device-token")
+        )
+
+        let notifications = await client.getNotifications()
+        #expect(notifications[0].1 == "device-token")
+    }
+
+    @Test
+    func clientSendRejectsEmptyDeviceToken() async {
+        let client = PushClientEphemeral()
+
+        do {
+            try await client.send(
+                notification: PushNotification(title: "title", body: "body"),
+                to: .deviceToken("")
+            )
+            Issue.record(
+                "Expected PushClientError.invalidDeviceToken to be thrown."
+            )
+        }
+        catch .invalidDeviceToken {
+            // Expected error.
+        }
+        catch {
+            Issue.record("Unexpected error: \(error)")
+        }
+    }
+
+    @Test
     func clientClearNotificationsRemovesAll() async throws {
         let client = PushClientEphemeral()
         let notification = PushNotification(title: "title", body: "body")
 
-        try await client.send(notification: notification, to: "news")
+        try await client.send(notification: notification, to: .topic("news"))
         await client.clearNotifications()
 
         let notifications = await client.getNotifications()

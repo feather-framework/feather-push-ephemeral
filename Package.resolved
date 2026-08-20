@@ -4,10 +4,10 @@
     {
       "identity" : "feather-push",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/feather-framework/feather-push",
+      "location" : "https://github.com/feather-framework/feather-push.git",
       "state" : {
-        "revision" : "e06495a562b32ae8d846dab443243e4984ab78df",
-        "version" : "1.0.0-beta.1"
+        "revision" : "10b6c4ed4cf0005c116a565bb3b036402ae916ad",
+        "version" : "1.0.0-beta.2"
       }
     }
   ],
