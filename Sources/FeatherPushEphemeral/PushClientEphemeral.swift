@@ -30,7 +30,8 @@ extension PushClientEphemeral: PushClient {
 
     /// Returns all notifications captured by this client and their destinations.
     ///
-    /// Each destination is the associated value from the ``PushDeliveryTarget``
+    /// Each destination is the associated value from the
+    /// ``FeatherPush/PushDeliveryTarget``
     /// used when the notification was sent.
     public func getNotifications() async -> [(PushNotification, String)] {
         await ephemeralPush.getNotifications()
@@ -41,8 +42,8 @@ extension PushClientEphemeral: PushClient {
     /// - Parameters:
     ///   - notification: The notification content and delivery options.
     ///   - target: The device token or topic to capture with the notification.
-    /// - Throws: ``PushClientError/invalidTopic`` or
-    ///   ``PushClientError/invalidDeviceToken`` when the target is empty.
+    /// - Throws: ``FeatherPush/PushClientError/invalidTopic`` or
+    ///   ``FeatherPush/PushClientError/invalidDeviceToken`` when the target is empty.
     public func send(
         notification: PushNotification,
         to target: PushDeliveryTarget
